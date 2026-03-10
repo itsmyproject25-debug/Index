@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booked Out Blueprint™ by Emma</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:#06040A;
+  --deep:#0E0912;
+  --card:#130E1C;
+  --rose:#C0005A;
+  --rose2:#E8006E;
+  --roseglow:rgba(192,0,90,0.18);
+  --gold:#C9A84C;
+  --gold2:#E8C96A;
+  --goldglow:rgba(201,168,76,0.15);
+  --white:#F5F0F8;
+  --offwhite:#D8CFE8;
+  --muted:#7A6A8A;
+  --border:rgba(201,168,76,0.15);
+}
+
+body{
+  background:var(--black);
+  font-family:'Jost',sans-serif;
+  color:var(--white);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* GRAIN TEXTURE OVERLAY */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:100;
+  opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* BG RADIALS */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 10%,rgba(192,0,90,0.06) 0%,transparent 45%),
+    radial-gradient(ellipse at 80% 90%,rgba(201,168,76,0.05) 0%,transparent 45%),
+    radial-gradient(ellipse at 50% 50%,rgba(60,0,30,0.3) 0%,transparent 60%);
+}
+
+/* SCISSOR DECORATIONS */
+.scissors{position:fixed;pointer-events:none;z-index:0;opacity:0.04;font-size:18px;}
+.scissors:nth-child(1){top:12%;left:3%;}
+.scissors:nth-child(2){top:35%;right:4%;font-size:14px;}
+.scissors:nth-child(3){top:65%;left:2%;font-size:16px;}
+.scissors:nth-child(4){top:82%;right:3%;font-size:12px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%,100%{opacity:0.6}50%{opacity:1}}
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.9}}
+@keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes borderPulse{0%,100%{border-color:rgba(201,168,76,0.15)}50%{border-color:rgba(201,168,76,0.35)}}
+
+.a1{animation:fadeUp 1s .1s both}
+.a2{animation:fadeUp 1s .3s both}
+.a3{animation:fadeUp 1s .5s both}
+.a4{animation:fadeUp 1s .7s both}
+.a5{animation:fadeUp 1s .9s both}
+
+.page{max-width:780px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
+
+/* ═══ HERO ═══ */
+.hero{
+  text-align:center;
+  padding:72px 0 64px;
+  position:relative;
+}
+
+/* Ornamental top line */
+.hero::before{
+  content:'';
+  display:block;
+  width:1px;
+  height:48px;
+  background:linear-gradient(to bottom,transparent,var(--gold));
+  margin:0 auto 24px;
+}
+
+.hero-eyebrow{
+  font-size:9px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);font-weight:400;margin-bottom:32px;
+  display:flex;align-items:center;justify-content:center;gap:16px;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{
+  content:'';width:32px;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold));
+  opacity:0.5;
+}
+.hero-eyebrow::after{background:linear-gradient(to left,transparent,var(--gold));}
+
+.hero-sub-label{
+  font-size:10px;letter-spacing:6px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:18px;font-weight:300;
+}
+
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(60px,14vw,112px);
+  font-weight:300;
+  line-height:0.92;
+  letter-spacing:-2px;
+  color:var(--white);
+  margin-bottom:4px;
+}
+.hero-title-2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(60px,14vw,112px);
+  font-weight:700;
+  line-height:0.92;
+  letter-spacing:-2px;
+  background:linear-gradient(135deg,var(--rose2),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:18px;
+  animation:shimmer 4s ease-in-out infinite;
+}
+.hero-title-3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(24px,5vw,38px);
+  font-style:italic;
+  font-weight:300;
+  color:var(--offwhite);
+  margin-bottom:32px;
+  line-height:1.3;
+}
+
+/* Gold ornament */
+.ornament{
+  display:flex;align-items:center;gap:14px;justify-content:center;
+  margin:24px 0;
+}
+.ornament::before,.ornament::after{
+  content:'';flex:1;max-width:100px;height:1px;
+  background:linear-gradient(to right,transparent,rgba(201,168,76,0.4));
+}
+.ornament::after{background:linear-gradient(to left,transparent,rgba(201,168,76,0.4));}
+.ornament-diamond{
+  width:8px;height:8px;
+  background:var(--gold);
+  transform:rotate(45deg);
+  opacity:0.7;
+  box-shadow:0 0 12px rgba(201,168,76,0.5);
+}
+
+.hero-tagline{
+  font-size:15px;color:var(--muted);line-height:1.8;
+  max-width:420px;margin:0 auto;font-weight:300;letter-spacing:0.3px;
+}
+.hero-tagline strong{color:var(--offwhite);font-weight:400;}
+
+.by-line{
+  margin-top:30px;
+  font-size:10px;letter-spacing:4px;text-transform:uppercase;
+  color:rgba(201,168,76,0.5);
+}
+.by-line span{color:var(--gold);}
+
+/* ═══ MEET EMMA ═══ */
+.meet-section{
+  margin-bottom:56px;
+  padding:44px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:2px;
+  position:relative;
+  overflow:hidden;
+  animation:borderPulse 4s ease-in-out infinite;
+}
+.meet-section::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+}
+.meet-section::after{
+  content:'E';
+  position:absolute;top:-20px;right:24px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:160px;font-weight:700;
+  color:rgba(192,0,90,0.04);line-height:1;
+}
+
+.meet-badge{
+  font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--rose2);
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.meet-badge::before{content:'✦';font-size:8px;animation:pulse 2s infinite;}
+
+.meet-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,6vw,54px);
+  font-weight:600;font-style:italic;
+  color:var(--white);margin-bottom:6px;line-height:1.1;
+}
+.meet-title{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:28px;}
+
+.stats-row{display:flex;gap:0;margin-bottom:32px;border:1px solid var(--border);border-radius:2px;overflow:hidden;}
+.stat-b{flex:1;padding:18px 14px;text-align:center;border-right:1px solid var(--border);}
+.stat-b:last-child{border-right:none;}
+.stat-b-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:700;line-height:1;margin-bottom:4px;
+  background:linear-gradient(135deg,var(--rose2),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-b-txt{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+
+.pain-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(18px,3vw,24px);
+  font-style:italic;color:var(--offwhite);
+  margin-bottom:18px;line-height:1.4;
+}
+.pain-list{display:flex;flex-direction:column;gap:10px;}
+.pain-item{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:12px 16px;
+  background:rgba(192,0,90,0.05);
+  border-left:2px solid rgba(192,0,90,0.3);
+}
+.pain-scissors{color:var(--rose2);font-size:13px;flex-shrink:0;margin-top:1px;}
+.pain-item span{font-size:14px;color:var(--muted);line-height:1.5;}
+.pain-item span strong{color:var(--white);font-weight:500;}
+
+.pain-conclusion{
+  margin-top:22px;padding:18px 20px;
+  background:rgba(201,168,76,0.05);
+  border:1px solid rgba(201,168,76,0.15);
+  border-radius:2px;
+}
+.pain-conclusion p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-style:italic;
+  color:var(--offwhite);line-height:1.55;text-align:center;
+}
+.pain-conclusion p strong{
+  background:linear-gradient(135deg,var(--rose2),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-style:normal;
+}
+
+/* ═══ SECTION HEAD ═══ */
+.sec-head{text-align:center;margin-bottom:32px;}
+.sec-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:80px;font-weight:700;line-height:1;
+  color:rgba(192,0,90,0.06);
+  margin-bottom:-20px;
+}
+.sec-label{
+  font-size:9px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+}
+.sec-label::before,.sec-label::after{content:'✦';font-size:7px;opacity:0.5;}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(26px,5vw,42px);
+  color:var(--white);line-height:1.2;
+}
+.sec-title em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--rose2),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ═══ WHAT'S INSIDE ═══ */
+.inside-list{display:flex;flex-direction:column;gap:2px;margin-bottom:56px;}
+.inside-item{
+  display:flex;gap:20px;align-items:flex-start;
+  padding:22px 28px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-bottom:none;
+  position:relative;overflow:hidden;
+  transition:background .3s,border-color .3s;
+}
+.inside-item:first-child{border-radius:2px 2px 0 0;}
+.inside-item:last-child{border-bottom:1px solid var(--border);border-radius:0 0 2px 2px;}
+.inside-item:hover{background:rgba(192,0,90,0.06);border-color:rgba(192,0,90,0.25);}
+.inside-item::before{
+  content:'';position:absolute;left:0;top:0;width:2px;height:0;
+  background:linear-gradient(to bottom,var(--rose2),var(--gold));
+  transition:height .4s;
+}
+.inside-item:hover::before{height:100%;}
+.inside-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;font-weight:700;line-height:1;
+  background:linear-gradient(135deg,var(--rose2),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  flex-shrink:0;width:42px;
+  opacity:0.7;
+}
+.inside-body strong{
+  display:block;font-size:15px;font-weight:500;
+  color:var(--white);margin-bottom:4px;letter-spacing:0.3px;
+}
+.inside-body span{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ═══ BONUS ═══ */
+.bonus-box{
+  margin-bottom:56px;padding:36px 40px;
+  background:linear-gradient(135deg,rgba(192,0,90,0.08),rgba(201,168,76,0.05));
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:2px;
+  position:relative;overflow:hidden;
+  text-align:center;
+}
+.bonus-box::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+.bonus-box::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(to right,transparent,var(--rose2),transparent);}
+.bonus-star{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.bonus-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,32px);font-style:italic;color:var(--white);margin-bottom:10px;line-height:1.3;}
+.bonus-desc{font-size:13.5px;color:var(--muted);line-height:1.7;max-width:440px;margin:0 auto;}
+.bonus-desc strong{color:var(--offwhite);}
+
+/* ═══ HOW IT WORKS ═══ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:56px;}
+@media(max-width:520px){.steps{grid-template-columns:1fr;}}
+.step-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:2px;padding:28px 20px;text-align:center;
+  position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s;
+}
+.step-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(192,0,90,0.12);}
+.step-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(to right,transparent,var(--rose2),transparent);opacity:0;transition:opacity .3s;}
+.step-card:hover::before{opacity:1;}
+.step-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;font-weight:700;line-height:1;
+  background:linear-gradient(135deg,var(--rose2),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:12px;opacity:0.6;
+}
+.step-icon{font-size:24px;margin-bottom:10px;display:block;}
+.step-title{font-size:14px;font-weight:500;color:var(--white);margin-bottom:6px;}
+.step-desc{font-size:12.5px;color:var(--muted);line-height:1.55;}
+.step-tag{
+  display:inline-block;margin-top:10px;
+  background:rgba(192,0,90,0.1);border:1px solid rgba(192,0,90,0.2);
+  border-radius:20px;padding:3px 12px;
+  font-size:10px;color:var(--rose2);font-weight:500;
+}
+
+/* ═══ REVIEWS ═══ */
+.reviews{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:56px;}
+@media(max-width:520px){.reviews{grid-template-columns:1fr;}}
+.review-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:2px;padding:24px 22px;
+  position:relative;overflow:hidden;
+  transition:transform .3s,border-color .3s;
+}
+.review-card:hover{transform:translateY(-3px);border-color:rgba(192,0,90,0.25);}
+.review-card::before{
+  content:'"';
+  font-family:'Cormorant Garamond',serif;
+  font-size:100px;font-weight:700;
+  color:rgba(192,0,90,0.06);
+  position:absolute;top:-16px;left:10px;line-height:1;
+}
+.review-stars{
+  font-size:11px;letter-spacing:2px;margin-bottom:12px;
+  background:linear-gradient(135deg,var(--rose2),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.review-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15.5px;font-style:italic;
+  color:var(--offwhite);line-height:1.65;
+  margin-bottom:14px;position:relative;z-index:1;
+}
+.review-result{
+  background:rgba(201,168,76,0.08);
+  border:1px solid rgba(201,168,76,0.18);
+  border-radius:2px;padding:5px 12px;
+  font-size:11px;color:var(--gold2);
+  font-weight:500;margin-bottom:10px;
+  display:inline-block;
+}
+.review-name{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);}
+
+/* ═══ GUARANTEE ═══ */
+.guarantee{
+  margin-bottom:56px;padding:36px 40px;
+  background:var(--card);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:2px;
+  display:flex;gap:24px;align-items:flex-start;
+  position:relative;overflow:hidden;
+}
+@media(max-width:520px){.guarantee{flex-direction:column;gap:16px;padding:26px 22px;}}
+.guarantee::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+.guarantee-icon{
+  width:56px;height:56px;flex-shrink:0;
+  background:rgba(201,168,76,0.08);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;
+}
+.guarantee-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.guarantee-title{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3.5vw,28px);color:var(--white);margin-bottom:8px;line-height:1.2;}
+.guarantee-desc{font-size:13.5px;color:var(--muted);line-height:1.65;}
+.guarantee-desc strong{color:var(--offwhite);font-weight:500;}
+
+/* ═══ PRICING ═══ */
+.pricing{
+  background:linear-gradient(160deg,var(--deep),rgba(60,0,20,0.8));
+  border:1px solid rgba(192,0,90,0.2);
+  border-radius:2px;
+  padding:64px 44px;
+  text-align:center;
+  position:relative;overflow:hidden;
+  margin-bottom:40px;
+}
+.pricing::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(to right,transparent,var(--rose2),var(--gold),transparent);}
+.pricing::after{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse,rgba(192,0,90,0.06),transparent);}
+
+.pricing-badge{
+  display:inline-block;
+  background:rgba(192,0,90,0.08);
+  border:1px solid rgba(192,0,90,0.2);
+  border-radius:50px;padding:6px 22px;
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--rose2);margin-bottom:28px;
+  position:relative;z-index:1;
+}
+
+.price-amount{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(80px,16vw,130px);
+  font-weight:700;line-height:1;
+  background:linear-gradient(135deg,var(--rose2),var(--gold2),var(--rose2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;z-index:1;
+  animation:shimmer 5s ease-in-out infinite;
+}
+.price-type{
+  font-size:10px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;
+  position:relative;z-index:1;
+}
+.price-roi{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-style:italic;
+  color:var(--offwhite);margin-bottom:28px;
+  line-height:1.5;position:relative;z-index:1;opacity:0.8;
+}
+
+.price-perks{
+  display:flex;flex-direction:column;gap:10px;
+  max-width:340px;margin:0 auto 36px;
+  position:relative;z-index:1;
+}
+.price-perk{
+  display:flex;align-items:center;gap:12px;
+  text-align:left;
+}
+.perk-check{
+  width:20px;height:20px;flex-shrink:0;
+  background:rgba(201,168,76,0.1);
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--gold2);
+}
+.price-perk span{font-size:13px;color:var(--offwhite);}
+
+.cta-btn{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--rose),#800040,var(--rose2));
+  color:var(--white);
+  font-size:11px;font-weight:500;
+  letter-spacing:4px;text-transform:uppercase;
+  padding:18px 56px;
+  border:none;cursor:pointer;border-radius:1px;
+  position:relative;z-index:1;
+  transition:opacity .2s,transform .2s,box-shadow .3s;
+  text-decoration:none;display:inline-block;
+}
+.cta-btn:hover{
+  opacity:.9;transform:translateY(-2px);
+  box-shadow:0 16px 56px rgba(192,0,90,0.4);
+}
+.cta-sub{margin-top:14px;font-size:11px;color:var(--muted);position:relative;z-index:1;}
+.cta-sub strong{color:var(--gold);}
+
+.urgency-bar{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:22px;padding:10px 24px;
+  background:rgba(192,0,90,0.06);
+  border:1px solid rgba(192,0,90,0.15);
+  border-radius:50px;
+  position:relative;z-index:1;
+}
+.urgency-dot{width:7px;height:7px;border-radius:50%;background:var(--rose2);animation:pulse 1.5s infinite;flex-shrink:0;}
+.urgency-text{font-size:11.5px;color:var(--muted);}
+.urgency-text strong{color:var(--rose2);}
+
+/* ═══ FOOTER ═══ */
+footer{
+  text-align:center;
+  padding:40px 0 0;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+footer::before{
+  content:'✦';
+  display:block;
+  font-size:12px;color:var(--gold);
+  margin-bottom:18px;
+  opacity:0.4;
+}
+.footer-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-style:italic;
+  color:var(--white);margin-bottom:6px;
+}
+.footer-tagline{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.footer-details{font-size:11.5px;color:rgba(255,255,255,0.18);line-height:1.8;}
+
+@media(max-width:600px){
+  .page{padding:0 16px 60px;}
+  .meet-section{padding:28px 22px;}
+  .pricing{padding:44px 22px;}
+  .inside-item{padding:18px 18px;}
+  .bonus-box{padding:26px 22px;}
+}
+</style>
+</head>
+<body>
+
+<div class="scissors">✂</div>
+<div class="scissors">✂</div>
+<div class="scissors">✂</div>
+<div class="scissors">✂</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow a1">The Ultimate Hair Stylist Guide</div>
+    <div class="hero-sub-label a1">Hair Artist Marketing</div>
+    <h1 class="hero-title a2">Booked</h1>
+    <h1 class="hero-title-2 a2">Out</h1>
+    <div class="hero-title-3 a3">Blueprint™</div>
+    <div class="ornament a3"><div class="ornament-diamond"></div></div>
+    <p class="hero-tagline a4">Turn your Instagram into a <strong>client-booking machine</strong> —<br>attracting premium clients who pay what you're worth.</p>
+    <div class="by-line a4">by <span>Emma</span> · Hair Artists <span>US & UK</span></div>
+  </div>
+
+  <!-- MEET EMMA -->
+  <div class="meet-section a5">
+    <div class="meet-badge">Meet Your Expert</div>
+    <div class="meet-name">Emma</div>
+    <div class="meet-title">Instagram Growth Strategist · Hair Industry · US & UK</div>
+
+    <div class="stats-row">
+      <div class="stat-b"><div class="stat-b-num">5+</div><div class="stat-b-txt">Years</div></div>
+      <div class="stat-b"><div class="stat-b-num">1,500+</div><div class="stat-b-txt">Clients</div></div>
+      <div class="stat-b"><div class="stat-b-num">US&UK</div><div class="stat-b-txt">Markets</div></div>
+    </div>
+
+    <div class="pain-title">Sound familiar?</div>
+    <div class="pain-list">
+      <div class="pain-item"><div class="pain-scissors">✂</div><span>Hundreds of profile visits... <strong>zero DMs</strong></span></div>
+      <div class="pain-item"><div class="pain-scissors">✂</div><span>Losing <strong>$300–$1,000 every single month</strong> to empty slots</span></div>
+      <div class="pain-item"><div class="pain-scissors">✂</div><span>Posting constantly but <strong>still not fully booked</strong></span></div>
+      <div class="pain-item"><div class="pain-scissors">✂</div><span>Attracting bargain-hunters, <strong>not premium clients</strong></span></div>
+    </div>
+    <div class="pain-conclusion">
+      <p>This is <strong>not a talent problem.</strong><br>It's a positioning problem — and Emma fixes it.</p>
+    </div>
+  </div>
+
+  <!-- WHAT'S INSIDE -->
+  <div class="sec-head">
+    <div class="sec-label">What's Inside</div>
+    <h2 class="sec-title">Everything You <em>Receive</em></h2>
+  </div>
+  <div class="inside-list">
+    <div class="inside-item"><div class="inside-num">01</div><div class="inside-body"><strong>Instagram Bio — Written For You</strong><span>Personally written for your specialty, city & booking prompt. Not a template — done for you.</span></div></div>
+    <div class="inside-item"><div class="inside-num">02</div><div class="inside-body"><strong>Local Client Targeting Strategy</strong><span>Hashtags, geo-tagging & engagement strategies that work in 2025 to attract clients in your exact area.</span></div></div>
+    <div class="inside-item"><div class="inside-num">03</div><div class="inside-body"><strong>Premium Service Positioning</strong><span>Frame your services so $300+ clients choose only you — and stop attracting people who haggle on price.</span></div></div>
+    <div class="inside-item"><div class="inside-num">04</div><div class="inside-body"><strong>7-Day Content Direction Plan</strong><span>7 post ideas that get saved, shared & turned into real bookings — with clear direction for each one.</span></div></div>
+    <div class="inside-item"><div class="inside-num">05</div><div class="inside-body"><strong>Personal Profile Audit PDF</strong><span>In your DMs within 48 hours — 3 exact fixes for this week that will immediately improve your results.</span></div></div>
+  </div>
+
+  <!-- BONUS -->
+  <div class="bonus-box">
+    <div class="bonus-star">★ Free Bonus ★</div>
+    <div class="bonus-title">High-Value Client Caption Formula</div>
+    <div class="bonus-desc">The exact caption structure used by stylists in <strong>NYC, LA, Dallas & London</strong> to fill their books completely — included free with every Blueprint.</div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="sec-head">
+    <div class="sec-label">The Process</div>
+    <h2 class="sec-title">How It <em>Works</em></h2>
+  </div>
+  <div class="steps">
+    <div class="step-card"><div class="step-num">1</div><span class="step-icon">💬</span><div class="step-title">DM 'BLUEPRINT'</div><div class="step-desc">Send a DM and Emma responds personally.</div><div class="step-tag">Within 60 seconds</div></div>
+    <div class="step-card"><div class="step-num">2</div><span class="step-icon">✨</span><div class="step-title">We Build It</div><div class="step-desc">Bio, strategy & personal profile audit — all done for you.</div><div class="step-tag">In 48 hours</div></div>
+    <div class="step-card"><div class="step-num">3</div><span class="step-icon">📅</span><div class="step-title">Bookings Grow</div><div class="step-desc">Premium clients arrive. Your calendar fills. Revenue grows.</div><div class="step-tag">From Week 1</div></div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="sec-head">
+    <div class="sec-label">Client Results</div>
+    <h2 class="sec-title">Real Stylists, <em>Real Results</em></h2>
+  </div>
+  <div class="reviews">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Got 3 new balayage clients in week 1. My bio now actually tells people what I do and where I am."</div>
+      <div class="review-result">✦ $900+ revenue instantly</div>
+      <div class="review-name">Ashley M. · Dallas, TX</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Went from 2 to 9 premium bookings per month. Best $100 I have ever spent on my business."</div>
+      <div class="review-result">✦ 4.5× more bookings</div>
+      <div class="review-name">Priya K. · London, UK</div>
+    </div>
+  </div>
+
+  <!-- GUARANTEE -->
+  <div class="guarantee">
+    <div class="guarantee-icon">🛡️</div>
+    <div>
+      <div class="guarantee-label">Our Promise</div>
+      <div class="guarantee-title">7-Day Results Guarantee</div>
+      <div class="guarantee-desc">If you don't see improvement in 7 days, Emma personally <strong>redoes everything FREE.</strong> Zero risk. Zero questions asked.</div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="pricing">
+    <div class="pricing-badge">One-Time · No Subscription · 5 Spots/Month</div>
+    <div class="price-amount">$100</div>
+    <div class="price-type">One-time investment</div>
+    <div class="price-roi">One balayage client = $150–$350<br>This pays for itself in a single appointment.</div>
+
+    <div class="price-perks">
+      <div class="price-perk"><div class="perk-check">✓</div><span>Instant DM Response — within 60 seconds</span></div>
+      <div class="price-perk"><div class="perk-check">✓</div><span>Full Delivery within 48 hours</span></div>
+      <div class="price-perk"><div class="perk-check">✓</div><span>7-Day Guarantee — redo free if not satisfied</span></div>
+    </div>
+
+    <a class="cta-btn" href="#">DM "BLUEPRINT" to Get Started</a>
+    <div class="cta-sub">Emma responds within <strong>60 seconds</strong></div>
+    <div><div class="urgency-bar"><div class="urgency-dot"></div><div class="urgency-text">Only <strong>5 spots/month</strong> — 2 remaining</div></div></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">The Booked-Out Blueprint™</div>
+    <div class="footer-tagline">by Emma · Hair Artists US & UK</div>
+    <div class="footer-details">$100 one-time · 5 spots per month · 48hr delivery<br>7-Day Results Guarantee · Instant DM Response</div>
+  </footer>
+
+</div>
+</body>
+</html>
